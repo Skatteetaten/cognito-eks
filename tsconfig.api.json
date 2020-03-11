@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "outDir": "build-api",
+    "rootDir": "./api",
+    "noEmit": false,
+    "noImplicitAny": false
+  },
+  "include": ["api"],
+  "exclude": ["node_modules"]
+}
