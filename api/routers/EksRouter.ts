@@ -25,7 +25,7 @@ async function generateToken(
 
   const request: HttpRequest = {
     headers: {
-      'x-k8s-aws-id': eksId
+      'x-k8s-aws-id': eksId // Required
     },
     method: 'GET',
     protocol: 'https',
@@ -37,6 +37,7 @@ async function generateToken(
     path: '/'
   };
 
+  // Date must be <= 60 seconds from now. Don't know why. Common knowledge.
   const now = new Date();
   now.setSeconds(now.getSeconds() + 58);
 
@@ -45,11 +46,12 @@ async function generateToken(
   const params = new URLSearchParams(signedReq.query as Record<string, string>);
   const stsUrl = new URL(`https://sts.amazonaws.com/?${params.toString()}`);
 
+  // Base64url, all "/" must be replaced with "_". And all "=" must be removed.
   return (
     'k8s-aws-v1.' +
     Buffer.from(stsUrl.href)
       .toString('base64')
-      .replace(/\//, '_')
+      .replace(/\//g, '_')
       .replace(/=/g, '')
   );
 }
