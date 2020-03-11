@@ -10,7 +10,16 @@
   - "Authenticated role selection" -> "Choose role from token"
   - "Role resoulution" -> "DENY"
 - User pool contains a group with a user. The role for that group is added to ConfigMap `aws-auth` in `kube-system` in EKS.
-  - Make sure that this role can list namespaces in Kubernetes.
+
+  - Make sure that this role can list namespaces in Kubernetes. Example:
+
+  ```
+    mapRoles: |
+    - rolearn: arn:aws:iam::<accountid>:role/<role name>
+      username: arn:aws:iam::<accountid>:role/<role name>
+      groups:
+      - system:masters
+  ```
 
 ## Configuration
 
