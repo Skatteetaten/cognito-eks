@@ -15,8 +15,8 @@
 
   ```
     mapRoles: |
-    - rolearn: arn:aws:iam::<accountid>:role/<role name>
-      username: arn:aws:iam::<accountid>:role/<role name>
+    - rolearn: arn:aws:iam::<accountid>:role/<role_name>
+      username: arn:aws:iam::<accountid>:role/<role_name>
       groups:
       - system:masters
   ```
