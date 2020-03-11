@@ -1,5 +1,5 @@
 export interface AwsCognitoConfiguration {
-  REGION: string;
+  COGNITO_REGION: string;
   IDENTITY_POOL_ID: string;
   USER_POOL_WEBCLIENT_ID: string;
   USER_POOL_ID: string;

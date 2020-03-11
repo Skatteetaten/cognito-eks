@@ -38,7 +38,7 @@ function useAmplifyConfigure(config?: AwsCognitoConfiguration): boolean {
     }
     Amplify.configure({
       Auth: {
-        region: config.REGION,
+        region: config.COGNITO_REGION,
         userPoolWebClientId: config.USER_POOL_WEBCLIENT_ID,
         userPoolId: config.USER_POOL_ID,
         oauth: {
@@ -110,7 +110,7 @@ function useAwsCredentials(
     const cognito = new AWS.CognitoIdentityCredentials({
       IdentityPoolId: config.IDENTITY_POOL_ID,
       Logins: {
-        [`cognito-idp.${config.REGION}.amazonaws.com/${config.USER_POOL_ID}`]:
+        [`cognito-idp.${config.COGNITO_REGION}.amazonaws.com/${config.USER_POOL_ID}`]:
           user
             ?.getSignInUserSession()
             ?.getIdToken()
@@ -118,7 +118,7 @@ function useAwsCredentials(
       }
     });
 
-    AWS.config.region = config.REGION;
+    AWS.config.region = config.COGNITO_REGION;
     AWS.config.credentials = cognito;
     AWS.config.cognitoidentity = cognito;
 
@@ -141,7 +141,7 @@ function useAwsCredentials(
 /**
  * Use once in application.
  */
-export function useLoginUser(): [CognitoUser?, CredentialsOptions?] {
+export function useAuthenticatedUser(): [CognitoUser?, CredentialsOptions?] {
   const configuration = useAwsCognitoConfiguration();
   const isConfigured = useAmplifyConfigure(configuration);
   const user = useCognitoUser(isConfigured);
