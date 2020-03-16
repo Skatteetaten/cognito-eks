@@ -104,17 +104,16 @@ function useAwsCredentials(
     CredentialsOptions | undefined
   >();
   useEffect(() => {
-    if (!config || !user) {
+    const session = user?.getSignInUserSession();
+    if (!config || !session) {
       return;
     }
     const cognito = new AWS.CognitoIdentityCredentials({
       IdentityPoolId: config.IDENTITY_POOL_ID,
       Logins: {
-        [`cognito-idp.${config.COGNITO_REGION}.amazonaws.com/${config.USER_POOL_ID}`]:
-          user
-            ?.getSignInUserSession()
-            ?.getIdToken()
-            .getJwtToken() ?? ''
+        [`cognito-idp.${config.COGNITO_REGION}.amazonaws.com/${config.USER_POOL_ID}`]: session
+          .getIdToken()
+          .getJwtToken()
       }
     });
 

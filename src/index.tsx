@@ -36,9 +36,13 @@ const App: FC = () => {
           <h3>User</h3>
           <p>{user?.getUsername()}</p>
           <h3>Groups</h3>
-          <p>{payload['cognito:groups']}</p>
+          {payload['cognito:groups'].map((group: any) => (
+            <p key={group}>{group}</p>
+          ))}
           <h3>Roles</h3>
-          <p>{payload['cognito:roles']}</p>
+          {payload['cognito:roles'].map((role: any) => (
+            <p key={role}>{role}</p>
+          ))}
         </div>
       )}
       {namespaces.length > 0 && (
